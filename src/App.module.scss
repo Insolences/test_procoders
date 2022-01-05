@@ -1,0 +1,33 @@
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.contentContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gradient {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(149deg, rgba(24,187,156,1) 0%, rgb(145, 136, 165) 42%, rgb(227, 205, 136) 72%, rgb(151, 203, 231) 100%);
+  animation: gradient 5s infinite linear;
+  background-size: 400%;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 80% 0;
+  }
+  50% {
+    background-position: 20% 100%;
+  }
+  100% {
+    background-position: 80% 0;
+  }
+}
+
+

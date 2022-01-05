@@ -1,0 +1,16 @@
+.navbarContainer{
+  background-color: powderblue;
+}
+
+.navItem{
+  transition: all 1s ease;
+  margin-left: 10px;
+  a{
+    font-size: 24px;
+    border-radius: 5px;
+  }
+  :hover{
+    color: white;
+    background-color: #2a68c8;
+  }
+}
