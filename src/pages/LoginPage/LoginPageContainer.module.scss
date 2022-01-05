@@ -5,3 +5,16 @@
 .formContainer{
   min-width: 360px;
 }
+
+.buttonContainer{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.alertNotification{
+  position: fixed;
+  top: 0;
+  right: 0;
+}

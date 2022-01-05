@@ -9,10 +9,10 @@ import styles from "./App.module.scss";
 function App() {
   return (
     <div className={`${styles.appContainer} `}>
-      <Header />
       <div className={styles.contentContainer}>
         <Suspense fallback={<Loader />}>
           <Router>
+            <Header />
             <Routes />
           </Router>
         </Suspense>

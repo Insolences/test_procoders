@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
 import styles from "./Header.module.scss";
+import { useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import authenticationActions from "../../store/actions/authenticationActions";
 export const Header = () => {
-  const [isLogged, setIsLogged] = useState(true);
+  const isLogged = useSelector(state => state.authentication.isAuth)
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const handleLogOut = () => {
-    setIsLogged(false);
+    dispatch(authenticationActions.singOut())
   };
 
   return (
@@ -15,19 +20,19 @@ export const Header = () => {
         {isLogged && (
           <>
             <NavItem className={styles.navItem}>
-              <NavLink active href="/news">
+              <NavLink active onClick={() => navigate('/news')} >
                 News
               </NavLink>
             </NavItem>
             <NavItem className={styles.navItem}>
-              <NavLink active href="/profile">
+              <NavLink active onClick={() => navigate('/profile')} >
                 Profile
               </NavLink>
             </NavItem>
           </>
         )}
         <NavItem className={styles.navItem}>
-          <NavLink href="/login" onClick={handleLogOut}>
+          <NavLink onClick={handleLogOut}>
             {isLogged ? "Log out" : "Log in"}
           </NavLink>
         </NavItem>
