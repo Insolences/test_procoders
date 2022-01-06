@@ -1,45 +1,45 @@
-import {authenticationTypes} from "../actions/types";
+import { authenticationTypes } from "../actions/types";
 
 const initState = {
-    status: '',
-    message: '',
-    isLoading: false,
-    isAuth: false,
-    data: {}
+  status: "",
+  message: "",
+  isLoading: false,
+  isAuth: false,
+  data: {},
 };
 
 const authenticationReducer = (state = initState, action) => {
+  const res = action.payload;
 
-    const res  = action.payload;
-    console.log('RES: ', res)
-    switch (action.type) {
-        case authenticationTypes.SING_IN:
-            return {
-                ...state,
-                isLoading: true
-            }
-        case authenticationTypes.SING_IN_SUCCESS:
-            return {
-                ...state,
-                isAuth: true,
-                isLoading: false,
-                status: res.status,
-                data: res.data
-            };
-        case authenticationTypes.SING_IN_FAIL:
-            return {
-                ...state,
-                isAuth: false,
-                isLoading: false,
-                status: res.status,
-                message: res.statusText
-            };
-        case authenticationTypes.SING_OUT: return {
-            ...initState
-        }
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case authenticationTypes.SING_IN:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case authenticationTypes.SING_IN_SUCCESS:
+      return {
+        ...state,
+        isAuth: true,
+        isLoading: false,
+        status: res.status,
+        data: res.data,
+      };
+    case authenticationTypes.SING_IN_FAIL:
+      return {
+        ...state,
+        isAuth: false,
+        isLoading: false,
+        status: res.status,
+        message: res.statusText,
+      };
+    case authenticationTypes.SING_OUT:
+      return {
+        ...initState,
+      };
+    default:
+      return state;
+  }
 };
 
 export default authenticationReducer;

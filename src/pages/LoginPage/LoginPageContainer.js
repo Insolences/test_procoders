@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Alert,
   Button,
@@ -9,9 +9,10 @@ import {
   Label,
 } from "reactstrap";
 import styles from "./LoginPageContainer.module.scss";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import authenticationActions from "../../store/actions/authenticationActions";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useEventListener } from "../../hooks/useEventListener";
 
 const initFormFields = {
   email: "",
@@ -22,16 +23,19 @@ const initFormFields = {
 };
 
 export const LoginPageContainer = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const passRef = useRef();
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
   const [formFields, setFormFields] = useState(initFormFields);
   const [isValid, setIsValid] = useState(true);
 
-  const { isFirstValid } = formFields.validation
-  const { isAuth, isLoading, status, message } = useSelector((state => state.authentication))
+  const { isFirstValid } = formFields.validation;
+  const { isAuth, isLoading, status, message } = useSelector(
+    (state) => state.authentication
+  );
 
-  const [openNotification, setOpenNotification] = useState(status === 'err')
+  const [openNotification, setOpenNotification] = useState(status === "err");
 
   const emailRex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -44,13 +48,13 @@ export const LoginPageContainer = () => {
   };
 
   const handleSubmit = () => {
-   const {email, password} = formFields
+    const { email, password } = formFields;
+
     validateEmail();
-    if (isValid){
-      dispatch(authenticationActions.singIn())
+    if (isValid) {
+      dispatch(authenticationActions.singIn());
       dispatch(authenticationActions.requestSignIn({ email, password }));
     }
-
   };
 
   const validateEmail = () => {
@@ -62,32 +66,41 @@ export const LoginPageContainer = () => {
     });
   };
 
+  const escFunction = (event) => {
+    if (event.keyCode === 13) {
+      event.target.id === "email" && passRef.current.focus();
+      event.target.id === "password" && formFields.password && handleSubmit();
+    }
+  };
+
+  useEventListener("keydown", escFunction);
+
   useEffect(() => {
-    if (emailRex.test(formFields.email)){
+    if (emailRex.test(formFields.email)) {
       return setIsValid(true);
     }
     if (isFirstValid && emailRex.test(formFields.email)) {
-     return setIsValid(true);
+      return setIsValid(true);
     }
-    if(!emailRex.test(formFields.email)){
+    if (!emailRex.test(formFields.email)) {
       return setIsValid(false);
     }
   }, [formFields]);
 
-  useEffect(()=>{
-    isAuth && navigate('/profile')
-  },[isAuth])
+  useEffect(() => {
+    isAuth && navigate("/profile");
+  }, [isAuth]);
 
-  useEffect(()=>{
-     if (status === 'err'){
-       setOpenNotification(true)
-     }
-  },[status])
+  useEffect(() => {
+    if (status === "err") {
+      setOpenNotification(true);
+    }
+  }, [status]);
 
   return (
     <div className={styles.loginContainer}>
       <h2>Sign In</h2>
-      <Form className="form" onSubmit={handleSubmit}>
+      <Form className="form">
         <FormGroup className={styles.formContainer}>
           <Label for="email">Email</Label>
           <Input
@@ -95,9 +108,9 @@ export const LoginPageContainer = () => {
             type="email"
             name="email"
             id="email"
-            size="lg"
+            bsSize="lg"
             value={formFields.email}
-            invalid={(!isValid && !isFirstValid) }
+            invalid={!isValid && !isFirstValid}
             placeholder="example@example.com"
             onChange={handleChange}
           />
@@ -106,7 +119,8 @@ export const LoginPageContainer = () => {
         <FormGroup>
           <Label for="password">Password</Label>
           <Input
-            size="lg"
+            innerRef={passRef}
+            bsSize="lg"
             type="password"
             name="password"
             value={formFields.password}
@@ -115,24 +129,23 @@ export const LoginPageContainer = () => {
             onChange={handleChange}
           />
         </FormGroup>
-        {status === 'err' &&
-         <div className={styles.alertNotification}>
+        {status === "err" && (
+          <div className={styles.alertNotification}>
             <Alert
-                className={styles.alertNotification}
-                isOpen={openNotification}
-                color="danger"
-                toggle={()=>setOpenNotification(false)}
+              className={styles.alertNotification}
+              isOpen={openNotification}
+              color="danger"
+              toggle={() => setOpenNotification(false)}
             >
               {message}
             </Alert>
-         </div>
-        }
+          </div>
+        )}
         <div className={styles.buttonContainer}>
           <Button
-              color="primary"
-              onClick={handleSubmit}
-              // active={!isSubmit}
-              disabled={!isValid && !isFirstValid}
+            color="primary"
+            onClick={handleSubmit}
+            disabled={!isValid && !isFirstValid}
           >
             {!isLoading ? "Sign in" : "Submitting..."}
           </Button>

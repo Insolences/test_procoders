@@ -8,7 +8,7 @@ import styles from "./App.module.scss";
 
 function App() {
   return (
-    <div className={`${styles.appContainer} `}>
+    <div className={`${styles.appContainer}`}>
       <div className={styles.contentContainer}>
         <Suspense fallback={<Loader />}>
           <Router>

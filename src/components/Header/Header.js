@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
 import styles from "./Header.module.scss";
 import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import authenticationActions from "../../store/actions/authenticationActions";
+
 export const Header = () => {
+
   const isLogged = useSelector(state => state.authentication.isAuth)
   const navigate = useNavigate();
   const dispatch = useDispatch()

@@ -1,11 +1,11 @@
 import api from "../api/api";
 
-const URL = "/validate";
+const URL = "/user-info";
 
-export const authenticationAPI = () => {
-  const singIn = (formData) => {
+export const userAPI = () => {
+  const getUserInfo = (id) => {
     return api
-      .post(`${URL}`, formData)
+      .get(`${URL}/${id}`)
       .then((data) => {
         return data;
       })
@@ -15,6 +15,6 @@ export const authenticationAPI = () => {
   };
 
   return {
-    singIn,
+    getUserInfo,
   };
 };
