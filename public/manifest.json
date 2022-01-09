@@ -13,9 +13,44 @@
       "sizes": "192x192"
     },
     {
+      "src": "./img/youtube.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./img/vk.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./img/twitter.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./img/web.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./img/telegram.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "./img/twitch.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "./img/news-background.jpeg",
+      "type": "image/png",
+      "sizes": "1300x840"
     }
   ],
   "permissions": [

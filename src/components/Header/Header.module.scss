@@ -1,6 +1,10 @@
 .navbarContainer{
   width: 100%;
-  background-color: powderblue;
+  background-color: #000000;
+    img{
+      width: 42px;
+      cursor: pointer;
+    }
 }
 
 .navItem{
@@ -10,9 +14,12 @@
   a{
     font-size: 24px;
     border-radius: 5px;
+    color: #ffffff;
   }
+  background-color: #000000;
+  color: #ffffff;
   :hover{
-    color: white;
-    background-color: #2a68c8;
+    color: #000000;
+    background-color: #0090ff;
   }
 }

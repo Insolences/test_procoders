@@ -1,36 +1,37 @@
 import { notificationTypes } from "../actions/types";
-// import { Color } from "@material-ui/lab/Alert";
 
 export const initialState = {
   open: false,
+  type: "",
+  message: {},
 };
 
 const notificationReducer = (state = initialState, action) => {
-  const data = action.payload;
+  const message = action.payload;
 
   switch (action.type) {
     case notificationTypes.SUCCESS:
       return {
         type: "success",
-        data,
+        message,
         open: true,
       };
     case notificationTypes.ERROR:
       return {
         type: "error",
-        data,
+        message,
         open: true,
       };
     case notificationTypes.WARNING:
       return {
         type: "warning",
-        data,
+        message,
         open: true,
       };
     case notificationTypes.INFO:
       return {
         type: "info",
-        data,
+        message,
         open: true,
       };
     case notificationTypes.CLEAR:

@@ -30,8 +30,6 @@ const authenticationReducer = (state = initState, action) => {
         ...state,
         isAuth: false,
         isLoading: false,
-        status: res.status,
-        message: res.statusText,
       };
     case authenticationTypes.SING_OUT:
       return {

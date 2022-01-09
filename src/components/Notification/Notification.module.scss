@@ -1,0 +1,31 @@
+.notificationContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  border-radius: 10px;
+  top: 68px;
+  right: 0;
+  button:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+/* Colors */
+
+.success{
+  background: #99ffb1;
+  border: 1px solid #7ce294;
+}
+.success p {
+  color: #2d8241;
+}
+
+.error{
+  background: #ff4e36;
+  border: 1px solid #db6767;
+}
+.error p {
+  color: #8b2828;
+}

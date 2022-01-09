@@ -1,26 +1,37 @@
-import { Navigate, Route, Routes } from "react-router-dom";
 import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { LoginPageContainer } from "../pages/LoginPage/LoginPageContainer";
 import { ProfileContainer } from "../pages/ProfilePage/ProfilePageContainer";
 import { NewsPageContainer } from "../pages/NewsPage/NewsPageContainer";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
+import { MainPageContainer } from "../pages/MainPage/MainPageContainer";
+import image from "../assets/news-background.jpeg";
 
 const AllRoutes = () => {
-  const {isAuth} = useSelector(state => state.authentication)
+  const { isAuth } = useSelector((state) => state.authentication);
+
   return (
-    <Routes>
-      <Route path="/" element={<LoginPageContainer />} />
-      <Route path="/login" element={<LoginPageContainer />} />
-      <Route
-        path="/profile"
-        element={!isAuth ? <Navigate to="/login" /> : <ProfileContainer />}
-      />
-      <Route
-        path="/news"
-        element={!isAuth ? <Navigate to="/login" /> : <NewsPageContainer />}
-      />
-      <Route path="*" element={<h2>Page not found</h2>} />
-    </Routes>
+    <div
+      style={{
+        padding: "10px 20px",
+        width: "100%",
+        background: image,
+      }}
+    >
+      <Routes>
+        <Route path="/" element={<MainPageContainer />} />
+        <Route path="/login" element={<LoginPageContainer />} />
+        <Route
+          path="/profile"
+          element={!isAuth ? <Navigate to="/login" /> : <ProfileContainer />}
+        />
+        <Route
+          path="/news"
+          element={!isAuth ? <Navigate to="/login" /> : <NewsPageContainer />}
+        />
+        <Route path="*" element={<h2>Page not found</h2>} />
+      </Routes>
+    </div>
   );
 };
 

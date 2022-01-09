@@ -1,5 +1,6 @@
 import { authenticationTypes } from "./types";
 import { authenticationAPI } from "../../api/authentication";
+import notificationActions from "./notificationActions";
 
 const singIn = () => {
   return { type: authenticationTypes.SING_IN };
@@ -9,8 +10,8 @@ const singInSuccess = (payload) => {
   return { type: authenticationTypes.SING_IN_SUCCESS, payload };
 };
 
-const singInFail = (payload) => {
-  return { type: authenticationTypes.SING_IN_FAIL, payload };
+const singInFail = () => {
+  return { type: authenticationTypes.SING_IN_FAIL };
 };
 
 const singOut = () => {
@@ -24,9 +25,11 @@ const requestSignIn = (formData) => {
     const { status, message, data } = await api.singIn(formData);
 
     if (status === "err") {
-      return dispatch(singInFail({ status, statusText: message }));
+      dispatch(singInFail());
+      return dispatch(notificationActions.error(message));
     }
 
+    dispatch(notificationActions.success("Login success!"));
     dispatch(singInSuccess({ status, data }));
   };
 };

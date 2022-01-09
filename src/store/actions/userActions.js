@@ -2,30 +2,29 @@ import { userTypes } from "./types";
 import notificationActions from "./notificationActions";
 import { userAPI } from "../../api/user";
 
-const getUser = (payload) => {
-  console.log(payload);
+const initUser = (payload) => {
   return { type: userTypes.GET_USER, payload };
 };
 
-const requestUserInfo = (id) => {
+const getUser = (id) => {
   const api = userAPI();
 
   return async (dispatch) => {
     const { status, message, data } = await api.getUserInfo(id);
-    console.log("CHECK: ", status, data);
+
     if (status === "err") {
       return dispatch(
         notificationActions.error({ status, statusText: message })
       );
     }
 
-    dispatch(getUser({ status, data }));
+    dispatch(initUser({ status, data }));
   };
 };
 
 const userActions = {
+  initUser,
   getUser,
-  requestUserInfo,
 };
 
 export default userActions;

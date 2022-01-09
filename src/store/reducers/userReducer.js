@@ -1,19 +1,19 @@
 import { userTypes } from "../actions/types";
 
 const initState = {
-  isLoaded: false,
+  isLoading: true,
   status: "",
   data: {},
 };
 
 const userReducer = (state = initState, action) => {
   const res = action.payload;
-  console.log("RES: ", res);
+
   switch (action.type) {
     case userTypes.GET_USER:
       return {
         ...state,
-        isLoaded: true,
+        isLoading: false,
         status: res.status,
         data: res.data,
       };

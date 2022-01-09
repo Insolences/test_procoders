@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  Alert,
   Button,
   Form,
   FormFeedback,
@@ -28,14 +27,10 @@ export const LoginPageContainer = () => {
   const passRef = useRef();
 
   const [formFields, setFormFields] = useState(initFormFields);
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState({ email: false, password: false });
 
   const { isFirstValid } = formFields.validation;
-  const { isAuth, isLoading, status, message } = useSelector(
-    (state) => state.authentication
-  );
-
-  const [openNotification, setOpenNotification] = useState(status === "err");
+  const { isAuth, isLoading } = useSelector((state) => state.authentication);
 
   const emailRex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -50,14 +45,14 @@ export const LoginPageContainer = () => {
   const handleSubmit = () => {
     const { email, password } = formFields;
 
-    validateEmail();
-    if (isValid) {
+    toggleFirstValid();
+    if (isValid.email && isValid.password) {
       dispatch(authenticationActions.singIn());
       dispatch(authenticationActions.requestSignIn({ email, password }));
     }
   };
 
-  const validateEmail = () => {
+  const toggleFirstValid = () => {
     setFormFields({
       ...formFields,
       validation: {
@@ -66,41 +61,31 @@ export const LoginPageContainer = () => {
     });
   };
 
-  const escFunction = (event) => {
+  const focusHelper = (event) => {
     if (event.keyCode === 13) {
       event.target.id === "email" && passRef.current.focus();
       event.target.id === "password" && formFields.password && handleSubmit();
     }
   };
 
-  useEventListener("keydown", escFunction);
+  useEventListener("keydown", focusHelper);
 
   useEffect(() => {
-    if (emailRex.test(formFields.email)) {
-      return setIsValid(true);
-    }
-    if (isFirstValid && emailRex.test(formFields.email)) {
-      return setIsValid(true);
-    }
-    if (!emailRex.test(formFields.email)) {
-      return setIsValid(false);
-    }
+    setIsValid({
+      email: emailRex.test(formFields.email),
+      password: !!formFields.password,
+    });
   }, [formFields]);
 
   useEffect(() => {
+    setFormFields(initFormFields);
     isAuth && navigate("/profile");
   }, [isAuth]);
 
-  useEffect(() => {
-    if (status === "err") {
-      setOpenNotification(true);
-    }
-  }, [status]);
-
   return (
     <div className={styles.loginContainer}>
-      <h2>Sign In</h2>
-      <Form className="form">
+      <h1>Sign In</h1>
+      <Form className={styles.form}>
         <FormGroup className={styles.formContainer}>
           <Label for="email">Email</Label>
           <Input
@@ -110,11 +95,11 @@ export const LoginPageContainer = () => {
             id="email"
             bsSize="lg"
             value={formFields.email}
-            invalid={!isValid && !isFirstValid}
+            invalid={!isValid.email && !isFirstValid}
             placeholder="example@example.com"
             onChange={handleChange}
           />
-          <FormFeedback>Please input a correct email.</FormFeedback>
+          <FormFeedback>Please enter a correct email.</FormFeedback>
         </FormGroup>
         <FormGroup>
           <Label for="password">Password</Label>
@@ -126,30 +111,20 @@ export const LoginPageContainer = () => {
             value={formFields.password}
             id="password"
             placeholder="enter password"
+            invalid={!isValid.password && !isFirstValid}
             onChange={handleChange}
           />
-        </FormGroup>
-        {status === "err" && (
-          <div className={styles.alertNotification}>
-            <Alert
-              className={styles.alertNotification}
-              isOpen={openNotification}
-              color="danger"
-              toggle={() => setOpenNotification(false)}
+          <FormFeedback>Enter password</FormFeedback>
+          <div className={styles.buttonContainer}>
+            <Button
+              color="primary"
+              onClick={handleSubmit}
+              disabled={!isValid.email || !isValid.password || isLoading}
             >
-              {message}
-            </Alert>
+              {!isLoading ? "Sign in" : "Submitting..."}
+            </Button>
           </div>
-        )}
-        <div className={styles.buttonContainer}>
-          <Button
-            color="primary"
-            onClick={handleSubmit}
-            disabled={!isValid && !isFirstValid}
-          >
-            {!isLoading ? "Sign in" : "Submitting..."}
-          </Button>
-        </div>
+        </FormGroup>
       </Form>
     </div>
   );

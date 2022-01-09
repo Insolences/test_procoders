@@ -1,0 +1,33 @@
+.newsContainer{
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 88px);
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  .newsContent{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    .news{
+      margin-top: 10px;
+      color: black;
+      background: rgba(255,255,255,0.9);
+      border-radius: 10px;
+      padding: 20px;
+    }
+  }
+  .newsPaginationContainer{
+    display: flex;
+    align-self: self-end;
+    justify-content: flex-end;
+    color: black;
+    background: rgba(255,255,255,0.9);
+    border-radius: 10px;
+    padding: 20px;
+  }
+}
+
+
+
