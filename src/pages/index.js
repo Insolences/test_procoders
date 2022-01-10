@@ -17,3 +17,9 @@ export const News = lazy(() =>
     default: NewsPageContainer,
   }))
 );
+
+export const Main = lazy(() =>
+  import("./MainPage/MainPageContainer").then(({ MainPageContainer }) => ({
+    default: MainPageContainer,
+  }))
+);

@@ -1,5 +1,5 @@
 const developmentConfig = {
-    apiRootUrl: 'https://mysterious-reef-29460.herokuapp.com/api/v1'
+  apiRootUrl: process.env.REACT_APP_BASE_URL,
 };
 
-export default developmentConfig
+export default developmentConfig;

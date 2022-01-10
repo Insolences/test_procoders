@@ -11,10 +11,10 @@ export const Header = () => {
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
-    dispatch(authenticationActions.singOut());
+    dispatch(authenticationActions.signOut());
   };
 
-  const handleSingIn = () => {
+  const handleSignIn = () => {
     navigate("/login");
   };
 
@@ -39,8 +39,8 @@ export const Header = () => {
           </>
         )}
         <NavItem className={styles.navItem}>
-          <NavLink onClick={isLogged ? handleLogOut : handleSingIn}>
-            {isLogged ? "Sing out" : "Sing in"}
+          <NavLink onClick={isLogged ? handleLogOut : handleSignIn}>
+            {isLogged ? "Sign out" : "Sign in"}
           </NavLink>
         </NavItem>
       </Nav>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Button,
   Form,
@@ -42,15 +42,16 @@ export const LoginPageContainer = () => {
     setFormFields({ ...formFields, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     const { email, password } = formFields;
 
     toggleFirstValid();
     if (isValid.email && isValid.password) {
-      dispatch(authenticationActions.singIn());
+      dispatch(authenticationActions.signIn());
       dispatch(authenticationActions.requestSignIn({ email, password }));
+      setFormFields(initFormFields);
     }
-  };
+  }, [formFields]);
 
   const toggleFirstValid = () => {
     setFormFields({

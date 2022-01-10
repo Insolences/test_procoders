@@ -1,62 +1,36 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { LoginPageContainer } from "../pages/LoginPage/LoginPageContainer";
-import { ProfileContainer } from "../pages/ProfilePage/ProfilePageContainer";
-import { NewsPageContainer } from "../pages/NewsPage/NewsPageContainer";
 import { useSelector } from "react-redux";
-import { MainPageContainer } from "../pages/MainPage/MainPageContainer";
-import image from "../assets/news-background.jpeg";
+import styles from "./routes.module.scss";
+import { Login, Main, News, Profile } from "../pages";
 
 const AllRoutes = () => {
   const { isAuth } = useSelector((state) => state.authentication);
 
+  const routesPath = Object.freeze({
+    main: "/",
+    login: "/login",
+    profile: "/profile",
+    news: "/news",
+  });
+
   return (
-    <div
-      style={{
-        padding: "10px 20px",
-        width: "100%",
-        background: image,
-      }}
-    >
+    <div className={styles.routesContainer}>
       <Routes>
-        <Route path="/" element={<MainPageContainer />} />
-        <Route path="/login" element={<LoginPageContainer />} />
+        <Route path={`${routesPath.main}`} element={<Main />} />
+        <Route path={`${routesPath.login}`} element={<Login />} />
         <Route
-          path="/profile"
-          element={!isAuth ? <Navigate to="/login" /> : <ProfileContainer />}
+          path={`${routesPath.profile}`}
+          element={!isAuth ? <Navigate to="/login" /> : <Profile />}
         />
         <Route
-          path="/news"
-          element={!isAuth ? <Navigate to="/login" /> : <NewsPageContainer />}
+          path={`${routesPath.news}`}
+          element={!isAuth ? <Navigate to="/login" /> : <News />}
         />
         <Route path="*" element={<h2>Page not found</h2>} />
       </Routes>
     </div>
   );
 };
-
-// const PublicRoute = ({ element, ...props }) => {
-//     return (
-//         <Route
-//             {...props}
-//             element={user ? element : <Navigate to="/login" replace />}
-//         />
-//     );
-// };
-//
-// const PrivateRoute = ({ element, ...props }) => {
-//     return (
-//         <Route
-//             {...props}
-//             element={
-//                 user ? (
-//                     element
-//                 ) : (
-//                     <Navigate to="/login" state={{ from: location.pathname }} />
-//                 )
-//             }
-//         />
-//     );
-// };
 
 export default AllRoutes;

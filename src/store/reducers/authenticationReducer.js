@@ -17,7 +17,7 @@ const authenticationReducer = (state = initState, action) => {
         ...state,
         isLoading: true,
       };
-    case authenticationTypes.SING_IN_SUCCESS:
+    case authenticationTypes.SIGN_IN_SUCCESS:
       return {
         ...state,
         isAuth: true,
@@ -25,16 +25,14 @@ const authenticationReducer = (state = initState, action) => {
         status: res.status,
         data: res.data,
       };
-    case authenticationTypes.SING_IN_FAIL:
+    case authenticationTypes.SIGN_IN_FAIL:
       return {
         ...state,
         isAuth: false,
         isLoading: false,
       };
-    case authenticationTypes.SING_OUT:
-      return {
-        ...initState,
-      };
+    case authenticationTypes.SIGN_OUT:
+      return initState;
     default:
       return state;
   }

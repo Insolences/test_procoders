@@ -3,7 +3,7 @@ import api from "../api/api";
 const URL = "/validate";
 
 export const authenticationAPI = () => {
-  const singIn = (formData) => {
+  const signIn = (formData) => {
     return api
       .post(`${URL}`, formData)
       .then((data) => {
@@ -15,6 +15,6 @@ export const authenticationAPI = () => {
   };
 
   return {
-    singIn,
+    signIn,
   };
 };

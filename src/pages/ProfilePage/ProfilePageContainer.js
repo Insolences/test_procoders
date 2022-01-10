@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styles from "./ProfilePageContainer.module.css";
+import styles from "./ProfilePageContainer.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import userActions from "../../store/actions/userActions";
 import { Loader } from "../../components/Loader/Loader";
