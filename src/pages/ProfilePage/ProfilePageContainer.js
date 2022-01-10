@@ -27,8 +27,8 @@ export const ProfileContainer = () => {
           <div>
             <p>Languages:</p>
             <ul className={styles.languagesList}>
-              {data.languages.map((el) => (
-                <li>{el}</li>
+              {data.languages.map((el, index) => (
+                <li key={index}>{el}</li>
               ))}
             </ul>
           </div>
@@ -36,9 +36,9 @@ export const ProfileContainer = () => {
         <div className={styles.socialIconsContainer}>
           <h2>Social links:</h2>
           <ul className={styles.socialLinksList}>
-            {data.social.map((el) => {
+            {data.social.map((el, index) => {
               return (
-                <li className={styles.socialLink}>
+                <li className={styles.socialLink} key={index}>
                   <a
                     rel="noopener"
                     className={`${styles.icons} ${styles[el.label]}`}

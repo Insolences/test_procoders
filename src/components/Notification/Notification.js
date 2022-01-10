@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import notificationActions from "../../store/actions/notificationActions";
 import styles from "./Notification.module.scss";
 import { Alert } from "reactstrap";
-import notificationActions from "../../store/actions/notificationActions";
 
 export const Notification = () => {
   const dispatch = useDispatch();

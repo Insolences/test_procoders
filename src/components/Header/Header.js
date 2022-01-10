@@ -1,9 +1,9 @@
 import React from "react";
-import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
-import styles from "./Header.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import authenticationActions from "../../store/actions/authenticationActions";
+import { Nav, Navbar, NavbarBrand, NavItem, NavLink } from "reactstrap";
+import styles from "./Header.module.scss";
 
 export const Header = () => {
   const isLogged = useSelector((state) => state.authentication.isAuth);
